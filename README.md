@@ -1,5 +1,5 @@
 # file-processor
-Utilitary Decompress and Compress Files (included RAR5)
+Java Utilitary - Decompress and Compress Files (included RAR5)
 
 I initially implemented the extraction for the following extensions:
 * .zip (DecompressZip) -> Native Java;
