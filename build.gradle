@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+}
+
+group 'com.github.marcusvoltolim'
+version '1.0.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    useJUnitPlatform()
+}
+
+dependencies {
+    compile 'org.apache.tika:tika-parsers:1.22'
+    compile 'org.apache.commons:commons-compress:1.19'
+    compile 'org.tukaani:xz:1.8'
+    compile 'com.github.axet:java-unrar:1.7.0-8'
+    compile fileTree(dir: "$rootProject.projectDir/libs", include: '*.jar')
+
+//    compile 'net.sf.sevenzipjbinding:sevenzipjbinding:9.20-2.00beta'
+//    compile 'net.sf.sevenzipjbinding:sevenzipjbinding-all-platforms:9.20-2.00beta'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.2'
+
+}
