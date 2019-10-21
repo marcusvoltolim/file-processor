@@ -26,7 +26,7 @@ public class ProcessorFactory {
         return new ProcessorFactory();
     }
 
-    public static IDecompress getDecompress() {
+    public IDecompress getDecompress() {
         return new DecompressAllFormatsUsingSevenZipLib(true);
     }
 
@@ -34,7 +34,7 @@ public class ProcessorFactory {
      * Implementation specified for each extension.
      */
     @SuppressWarnings("unused")
-    public static IDecompress getDecompressSpecified(final InputStream inputStream, final boolean ignoreFolder) throws IOException {
+    public IDecompress getDecompressSpecified(final InputStream inputStream, final boolean ignoreFolder) throws IOException {
         final String mediaType = MediaTypeUtils.getMediaType(inputStream);
         if (MediaTypeUtils.isZip(mediaType)) {
             loggingDecompress(DecompressZip.class, ".zip");
@@ -57,6 +57,14 @@ public class ProcessorFactory {
         }
     }
 
+    public ICompress getCompress(String mediaType) {
+        if (MediaTypeUtils.isZip(mediaType)) {
+            return new CompressZip();
+        } else {
+            throw new IllegalArgumentException("Compression not supported by file: " + mediaType);
+        }
+    }
+
     private static void loggingDecompress(final Class classe, final String extension) {
         LOG.info("Decompress: " + classe.getName() + " found for file: " + extension);
     }
@@ -73,14 +81,6 @@ public class ProcessorFactory {
             sb.append(String.format("%02x", aByte));
         }
         return sb.toString();
-    }
-
-    public ICompress getCompress(String mediaType) {
-        if (MediaTypeUtils.isZip(mediaType)) {
-            return new CompressZip();
-        } else {
-            throw new IllegalArgumentException("Compression not supported by file: " + mediaType);
-        }
     }
 
 }
